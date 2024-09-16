@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FaIdCard } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import {
   LuAward,
@@ -11,13 +10,77 @@ import {
   LuUser,
 } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import {
+  validateEmail,
+  validateMobileNumber,
+  validateName,
+  validatePassword,
+  validateWebmail,
+} from "../Validators";
+import { Alert } from "flowbite-react";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formdata, setFormData] = useState({});
+  const [formError, setFormError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateName(formdata.firstName)) {
+      setFormError("First name must only contain letters");
+      return;
+    } else {
+      setFormError(null);
+    }
+
+    if (!validateName(formdata.lastName)) {
+      setFormError("Last name must only contain letters");
+      return;
+    } else {
+      setFormError(null);
+    }
+
+    if (formdata.role === undefined) {
+      setFormError("Please select your role");
+      return;
+    } else {
+      setFormError(null);
+    }
+
+    if (formdata.role === "student") {
+      if (!validateWebmail(formdata.webmail)) {
+        setFormError("Your webmail is not valid");
+        return;
+      } else {
+        setFormError(null);
+      }
+    }
+
+    if (formdata.role && formdata.role === "boarding-owner") {
+      if (!validateEmail(formdata.email)) {
+        setFormError("Please enter a valid email");
+        return;
+      } else {
+        setFormError(null);
+      }
+    }
+
+    if (formdata.role && formdata.role === "boarding-owner") {
+      if (!validateMobileNumber(formdata.phone)) {
+        setFormError("Please enter a valid phone number");
+        return;
+      } else {
+        setFormError(null);
+      }
+    }
+
+    if (!validatePassword(formdata.password).status) {
+      setFormError(validatePassword(formdata.password).message);
+      return;
+    } else {
+      setFormError(null);
+    }
 
     console.log(formdata);
   };
@@ -34,10 +97,10 @@ const SignUp = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuUser className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuUser className="absolute left-2 opacity-50" size={22} />
               <input
-                className="ps-3 border-0 focus:ring-0 text-gray-600 placeholder:text-gray-600"
+                className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                 type="text"
                 id="firstName"
                 required
@@ -47,10 +110,10 @@ const SignUp = () => {
                 }}
               />
             </div>
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuUser className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuUser className="absolute left-2 opacity-50" size={22} />
               <input
-                className="ps-3 border-0 focus:ring-0 text-gray-600 placeholder:text-gray-600"
+                className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                 type="text"
                 id="lastName"
                 required
@@ -60,10 +123,10 @@ const SignUp = () => {
                 }}
               />
             </div>
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuAward className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuAward className="absolute left-2 opacity-50" size={22} />
               <select
-                className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600"
+                className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 py-3"
                 type="text"
                 id="role"
                 required
@@ -71,7 +134,7 @@ const SignUp = () => {
                 onChange={(e) => {
                   setFormData({ ...formdata, role: e.target.value });
                 }}
-                defaultValue={"unselected"}
+                defaultValue="unselected"
               >
                 <option value={"unselected"} disabled>
                   What are you?
@@ -82,13 +145,13 @@ const SignUp = () => {
             </div>
             {formdata.role === "student" && (
               <>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-                  <LuMail className=" opacity-50" size={22} />
+                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                  <LuMail className="absolute left-2 opacity-50" size={22} />
                   <input
-                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                     type="email"
                     id="webmail"
-                    required
+                    required={formdata.role === "student" ? true : false}
                     placeholder="Webmail"
                     onChange={(e) => {
                       setFormData({ ...formdata, webmail: e.target.value });
@@ -99,26 +162,26 @@ const SignUp = () => {
             )}
             {formdata.role === "boarding-owner" && (
               <>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-                  <LuMail className=" opacity-50" size={22} />
+                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                  <LuMail className="absolute left-2 opacity-50" size={22} />
                   <input
-                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                     type="email"
                     id="email"
-                    required
+                    required={formdata.role === "boarding-owner" ? true : false}
                     placeholder="Email"
                     onChange={(e) => {
                       setFormData({ ...formdata, email: e.target.value });
                     }}
                   />
                 </div>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-                  <LuPhone className=" opacity-50" size={22} />
+                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                  <LuPhone className="absolute left-2 opacity-50" size={22} />
                   <input
-                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                     type="text"
                     id="phone"
-                    required
+                    required={formdata.role === "boarding-owner" ? true : false}
                     placeholder="Contact No"
                     onChange={(e) => {
                       setFormData({ ...formdata, phone: e.target.value });
@@ -127,10 +190,10 @@ const SignUp = () => {
                 </div>
               </>
             )}
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuLock className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuLock className="absolute left-2 opacity-50" size={22} />
               <input
-                className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
+                className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
                 type={showPassword ? "text" : "password"}
                 id="password"
                 required
@@ -144,7 +207,7 @@ const SignUp = () => {
                   onClick={() => {
                     setShowPassword(false);
                   }}
-                  className="text-[#003566] cursor-pointer"
+                  className="absolute right-2 text-[#003566] cursor-pointer"
                   size={22}
                 />
               ) : (
@@ -152,11 +215,20 @@ const SignUp = () => {
                   onClick={() => {
                     setShowPassword(true);
                   }}
-                  className="text-[#003566] cursor-pointer"
+                  className="absolute right-2 text-[#003566] cursor-pointer"
                   size={22}
                 />
               )}
             </div>
+            {formError && (
+              <Alert
+                className="w-full"
+                color={"failure"}
+                style={{ fontSize: 16 }}
+              >
+                {formError}
+              </Alert>
+            )}
             <button
               type="submit"
               className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"

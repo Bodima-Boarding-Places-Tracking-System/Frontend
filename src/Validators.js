@@ -51,3 +51,13 @@ export const validateName = (name) => {
   const letters = /^[a-zA-Z]+$/;
   return letters.test(name.trim());
 };
+
+export const validateWebmail = (webmail) => {
+  const webmailRegex = /^[a-zA-Z]+\.?\d{2}@uom\.lk$/;
+  return webmailRegex.test(webmail);
+};
+
+export const validateMobileNumber = (mobileNumber) => {
+  const mobileRegex = /^(?:\+94|0)?7[0-9]{8}$/;
+  return mobileRegex.test(mobileNumber);
+};

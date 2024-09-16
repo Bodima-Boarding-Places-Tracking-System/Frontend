@@ -40,10 +40,10 @@ const Login = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuMail className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuMail className="absolute left-2 opacity-50" size={22} />
               <input
-                className="ps-3 border-0 focus:ring-0 flex-1"
+                className="ps-10 border-0 focus:ring-0 flex-1 py-3"
                 type="email"
                 required
                 placeholder="Email"
@@ -52,10 +52,10 @@ const Login = () => {
                 }}
               />
             </div>
-            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
-              <LuLock className=" opacity-50" size={22} />
+            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+              <LuLock className="absolute left-2 opacity-50" size={22} />
               <input
-                className="ps-3 border-0 focus:ring-0 flex-1"
+                className="ps-10 border-0 focus:ring-0 flex-1 py-3"
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="Password"
@@ -68,7 +68,7 @@ const Login = () => {
                   onClick={() => {
                     setShowPassword(false);
                   }}
-                  className="text-[#003566] cursor-pointer"
+                  className="absolute right-2 text-[#003566] cursor-pointer"
                   size={22}
                 />
               ) : (
@@ -76,7 +76,7 @@ const Login = () => {
                   onClick={() => {
                     setShowPassword(true);
                   }}
-                  className="text-[#003566] cursor-pointer"
+                  className="absolute right-2 text-[#003566] cursor-pointer"
                   size={22}
                 />
               )}
