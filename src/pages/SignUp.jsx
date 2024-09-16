@@ -24,7 +24,7 @@ const SignUp = () => {
 
   return (
     <div className="w-full min-h-screen p-4">
-      <div className="md:max-w-md md:mx-auto flex flex-col mt-10 md:mt-20 mb-20">
+      <div className="max-w-lg md:max-w-md mx-auto flex flex-col mt-10 md:mt-20 mb-20">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-4xl">Sign Up</h2>
           <p>Please fill the details below</p>
@@ -34,23 +34,38 @@ const SignUp = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
               <LuUser className=" opacity-50" size={22} />
               <input
-                className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
+                className="ps-3 border-0 focus:ring-0 text-gray-600 placeholder:text-gray-600"
                 type="text"
+                id="firstName"
                 required
-                placeholder="Name"
+                placeholder="First name"
                 onChange={(e) => {
-                  setFormData({ ...formdata, name: e.target.value });
+                  setFormData({ ...formdata, firstName: e.target.value });
                 }}
               />
             </div>
-            <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
+              <LuUser className=" opacity-50" size={22} />
+              <input
+                className="ps-3 border-0 focus:ring-0 text-gray-600 placeholder:text-gray-600"
+                type="text"
+                id="lastName"
+                required
+                placeholder="Last name"
+                onChange={(e) => {
+                  setFormData({ ...formdata, lastName: e.target.value });
+                }}
+              />
+            </div>
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
               <LuAward className=" opacity-50" size={22} />
               <select
-                className="ps-4 focus:outline-none flex-1 text-gray-600"
+                className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600"
                 type="text"
+                id="role"
                 required
                 placeholder="What are you?"
                 onChange={(e) => {
@@ -67,11 +82,12 @@ const SignUp = () => {
             </div>
             {formdata.role === "student" && (
               <>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
                   <LuMail className=" opacity-50" size={22} />
                   <input
-                    className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
                     type="email"
+                    id="webmail"
                     required
                     placeholder="Webmail"
                     onChange={(e) => {
@@ -83,22 +99,12 @@ const SignUp = () => {
             )}
             {formdata.role === "boarding-owner" && (
               <>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
-                  <FaIdCard className=" opacity-50" size={22} />
-                  <input
-                    className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
-                    type="text"
-                    placeholder="Registration No (Optional)"
-                    onChange={(e) => {
-                      setFormData({ ...formdata, regNo: e.target.value });
-                    }}
-                  />
-                </div>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
                   <LuMail className=" opacity-50" size={22} />
                   <input
-                    className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
                     type="email"
+                    id="email"
                     required
                     placeholder="Email"
                     onChange={(e) => {
@@ -106,11 +112,12 @@ const SignUp = () => {
                     }}
                   />
                 </div>
-                <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+                <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
                   <LuPhone className=" opacity-50" size={22} />
                   <input
-                    className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
+                    className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
                     type="text"
+                    id="phone"
                     required
                     placeholder="Contact No"
                     onChange={(e) => {
@@ -120,11 +127,12 @@ const SignUp = () => {
                 </div>
               </>
             )}
-            <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
               <LuLock className=" opacity-50" size={22} />
               <input
-                className="ps-4 focus:outline-none flex-1 text-gray-600 placeholder:text-gray-600"
+                className="ps-3 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600"
                 type={showPassword ? "text" : "password"}
+                id="password"
                 required
                 placeholder="Password"
                 onChange={(e) => {
@@ -151,7 +159,7 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-[#FFC800] hover:bg-[#FFD60A] font-medium rounded py-3"
+              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"
             >
               Create Account
             </button>

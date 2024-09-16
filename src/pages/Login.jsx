@@ -1,21 +1,36 @@
+import { Alert } from "flowbite-react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { LuEye, LuEyeOff, LuLock, LuMail } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { validateEmail, validatePassword } from "../Validators";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formdata, setFormData] = useState({});
+  const [formError, setFormError] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formdata);
+    if (!validateEmail(formdata.email)) {
+      setFormError("Please enter a valid email");
+      return;
+    } else {
+      setFormError(null);
+    }
+
+    if (!validatePassword(formdata.password).status) {
+      setFormError(validatePassword(formdata.password).message);
+      return;
+    } else {
+      setFormError(null);
+    }
   };
 
   return (
     <div className="w-full min-h-screen p-4">
-      <div className="md:max-w-md md:mx-auto flex flex-col mt-10 md:mt-20">
+      <div className="max-w-lg md:max-w-md mx-auto flex flex-col mt-10 md:mt-20">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-4xl">Login</h2>
           <p>Please enter your email and password</p>
@@ -25,10 +40,10 @@ const Login = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
               <LuMail className=" opacity-50" size={22} />
               <input
-                className="ps-4 focus:outline-none flex-1"
+                className="ps-3 border-0 focus:ring-0 flex-1"
                 type="email"
                 required
                 placeholder="Email"
@@ -37,10 +52,10 @@ const Login = () => {
                 }}
               />
             </div>
-            <div className="w-full flex items-center border-2 rounded border-gray-200 p-3">
+            <div className="w-full flex items-center border-2 rounded border-gray-200 px-3 py-1">
               <LuLock className=" opacity-50" size={22} />
               <input
-                className="ps-4 focus:outline-none flex-1"
+                className="ps-3 border-0 focus:ring-0 flex-1"
                 type={showPassword ? "text" : "password"}
                 required
                 placeholder="Password"
@@ -69,9 +84,18 @@ const Login = () => {
             <Link className=" font-medium text-[#003566] hover:underline">
               Forgot password?
             </Link>
+            {formError && (
+              <Alert
+                className="w-full"
+                style={{ fontSize: 16 }}
+                color={"failure"}
+              >
+                {formError}
+              </Alert>
+            )}
             <button
               type="submit"
-              className="w-full bg-[#FFC800] hover:bg-[#FFD60A] font-medium rounded py-3"
+              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"
             >
               Log In
             </button>
