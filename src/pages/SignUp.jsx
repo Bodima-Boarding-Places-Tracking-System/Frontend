@@ -11,6 +11,7 @@ import {
 } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import {
+  checkPasswordStrength,
   validateEmail,
   validateMobileNumber,
   validateName,
@@ -23,6 +24,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formdata, setFormData] = useState({});
   const [formError, setFormError] = useState(null);
+  const [passwordStrength, setPasswordStrength] = useState(null);
+  const [passwordStrengthColor, setPasswordStrengthColor] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,9 +88,31 @@ const SignUp = () => {
     console.log(formdata);
   };
 
+  const handlePasswordStrengthChecker = (e) => {
+    const strength = checkPasswordStrength(e.target.value);
+    setPasswordStrength(strength);
+    switch (strength) {
+      case "Too weak":
+        setPasswordStrengthColor("red-500");
+        break;
+      case "Weak":
+        setPasswordStrengthColor("yellow-500");
+        break;
+      case "Normal":
+        setPasswordStrengthColor("indigo-500");
+        break;
+      case "Strong":
+        setPasswordStrengthColor("green-500");
+        break;
+      default:
+        setPasswordStrengthColor("gray-200");
+        break;
+    }
+  };
+
   return (
     <div className="w-full min-h-screen p-4">
-      <div className="max-w-lg md:max-w-md mx-auto flex flex-col mt-10 md:mt-20 mb-20">
+      <div className="max-w-lg md:max-w-md mx-auto flex flex-col mt-10 md:mt-12 mb-20">
         <div className="flex flex-col gap-2">
           <h2 className="font-bold text-4xl">Sign Up</h2>
           <p>Please fill the details below</p>
@@ -199,6 +224,7 @@ const SignUp = () => {
                 required
                 placeholder="Password"
                 onChange={(e) => {
+                  handlePasswordStrengthChecker(e);
                   setFormData({ ...formdata, password: e.target.value });
                 }}
               />
@@ -219,6 +245,41 @@ const SignUp = () => {
                   size={22}
                 />
               )}
+            </div>
+            <div className="w-full space-y-2 mb-2">
+              <div className="flex justify-between">
+                <span>Password strength</span>
+                <span className={`font-medium text-${passwordStrengthColor}`}>{passwordStrength}</span>
+              </div>
+              <div className="flex justify-between flex-1 gap-4">
+                <div
+                  className={`border-b-4 border-gray-200 flex flex-1 rounded border-${passwordStrengthColor}`}
+                ></div>
+                <div
+                  className={
+                    passwordStrength === "Normal" ||
+                    passwordStrength === "Strong" ||
+                    passwordStrength === "Weak"
+                      ? `border-b-4 border-gray-200 flex flex-1 rounded border-${passwordStrengthColor}`
+                      : `border-b-4 border-gray-200 flex flex-1 rounded`
+                  }
+                ></div>
+                <div
+                  className={
+                    passwordStrength === "Normal" ||
+                    passwordStrength === "Strong"
+                      ? `border-b-4 border-gray-200 flex flex-1 rounded border-${passwordStrengthColor}`
+                      : `border-b-4 border-gray-200 flex flex-1 rounded`
+                  }
+                ></div>
+                <div
+                  className={
+                    passwordStrength === "Strong"
+                      ? `border-b-4 border-gray-200 flex flex-1 rounded border-${passwordStrengthColor}`
+                      : `border-b-4 border-gray-200 flex flex-1 rounded`
+                  }
+                ></div>
+              </div>
             </div>
             {formError && (
               <Alert

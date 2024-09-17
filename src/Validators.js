@@ -61,3 +61,89 @@ export const validateMobileNumber = (mobileNumber) => {
   const mobileRegex = /^(?:\+94|0)?7[0-9]{8}$/;
   return mobileRegex.test(mobileNumber);
 };
+
+export const checkPasswordStrength = (password) => {
+  const lowerRegex = /^(?=.*[a-z])/;
+  const upperRegex = /^(?=.*[A-Z])/;
+  const specialRegex = /^(?=.*[@$!%*?&#])/;
+  const digitRegex = /^(?=.*\d)/;
+
+  if (
+    lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    specialRegex.test(password)
+  ) {
+    return "Too weak";
+  }
+
+  if (
+    lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    specialRegex.test(password) ||
+    lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    specialRegex.test(password)
+  ) {
+    return "Weak";
+  }
+
+  if (
+    lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    !specialRegex.test(password) ||
+    lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    !digitRegex.test(password) &&
+    specialRegex.test(password) ||
+    lowerRegex.test(password) &&
+    !upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    specialRegex.test(password) ||
+    !lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    specialRegex.test(password)
+  ) {
+    return "Normal";
+  }
+
+  if (
+    lowerRegex.test(password) &&
+    upperRegex.test(password) &&
+    digitRegex.test(password) &&
+    specialRegex.test(password) &&
+    password.length >=8
+  ) {
+    return "Strong";
+  } else {
+    return "Normal"
+  }
+};

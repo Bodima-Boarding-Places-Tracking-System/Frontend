@@ -20,8 +20,8 @@ const Login = () => {
       setFormError(null);
     }
 
-    if (!validatePassword(formdata.password).status) {
-      setFormError(validatePassword(formdata.password).message);
+    if (formdata.password.length < 8) {
+      setFormError("Password must be at least 8 characters long");
       return;
     } else {
       setFormError(null);
