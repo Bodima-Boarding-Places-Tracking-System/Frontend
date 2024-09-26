@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Filters from "../components/Filters";
+import BoardingCard from "../components/BoardingCard";
 
 const Home = () => {
   const [posts, setPosts] = useState(null);
@@ -30,13 +31,12 @@ const Home = () => {
           <Filters />
           </div>
           <div className="flex-1 p-4 border rounded-lg">
-            <h1>Posts</h1>
             {posts && posts.length > 0 ? (
-              <ul>
+              <div className="flex flex-col gap-2">
                 {posts.map((post) => (
-                  <li key={post.id}>{post.name}</li> // Assuming each post has `id` and `title`
+                  <BoardingCard className="" key={post.id} post={post} />
                 ))}
-              </ul>
+              </div>
             ) : (
               <p>No posts available</p>
             )}

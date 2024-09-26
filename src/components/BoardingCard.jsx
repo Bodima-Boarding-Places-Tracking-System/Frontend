@@ -1,7 +1,7 @@
 import React from "react";
 import { HiLocationMarker, HiStar } from "react-icons/hi";
 
-const BoardingCard = () => {
+const BoardingCard = ({ post }) => {
   return (
     <div className=" w-full md:max-w-[750px] ">
       <div className=" bg-white text-whitew-full h-48 shadow-xl rounded-lg flex p-2 gap-3 border-2">
@@ -16,13 +16,11 @@ const BoardingCard = () => {
           />
         </div>
         <div className="bg-white flex-1 flex flex-col justify-between h-full p-4">
-          <h1 className="text-2xl font-medium line-clamp-1">
-            Ceylon Ginger Cinnamon chai tea
-          </h1>
+          <h1 className="text-2xl font-medium line-clamp-1">{post.name}</h1>
           <div className="flex flex-col gap-1 pb-2">
             <div className="flex items-center gap-1 mt-2 ">
               <HiStar className="text-[#003566]" />
-              <p>Ratings</p>
+              <p>{post.description}</p>
             </div>
             <div className="flex items-center gap-1">
               <HiLocationMarker className="text-[#003566]" />

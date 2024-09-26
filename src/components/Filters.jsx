@@ -19,7 +19,7 @@ const Filters = () => {
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
               required
-              value={"empty"}
+              defaultValue={"empty"}
             >
               <option value="empty">Distance to the university</option>
               <option value="1">1 km</option>
@@ -32,7 +32,7 @@ const Filters = () => {
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
               required
-              value={"empty"}
+              defaultValue={"empty"}
             >
               <option value="empty">Price</option>
               <option value="<5000">Rs 5000 or less</option>
@@ -45,7 +45,7 @@ const Filters = () => {
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
               required
-              value={"empty"}
+              defaultValue={"empty"}
             >
               <option value="empty">No of beds</option>
               <option value="1">1</option>
@@ -58,7 +58,7 @@ const Filters = () => {
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
               required
-              value={"empty"}
+              defaultValue={"empty"}
             >
               <option value="empty">Looking for</option>
               <option value="boys">Boys</option>
