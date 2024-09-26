@@ -27,13 +27,13 @@ const Header = () => {
               className="text-gray-200 md:hover:text-yellow-300"
               as={"div"}
             >
-              <Link to={"/"}>About</Link>
+              <Link to={"/about"}>About</Link>
             </NavbarLink>
             <NavbarLink
               className="text-gray-200 md:hover:text-yellow-300"
               as={"div"}
             >
-              <Link to={"/"}>Contact</Link>
+              <Link to={"/contact"}>Contact</Link>
             </NavbarLink>
           </NavbarCollapse>
         </div>
