@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import HeroSection from "../components/HeroSection";
 import Filters from "../components/Filters";
 import BoardingCard from "../components/BoardingCard";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [posts, setPosts] = useState(null);
@@ -32,12 +33,19 @@ const Home = () => {
           </div>
           <div className="flex-1 p-4 border rounded-lg">
             {posts && posts.length > 0 ? (
-              <div className="flex flex-col gap-2">
+             
+              <div  className="flex flex-col gap-2">
+                
                 {posts.map((post) => (
+                  <Link key={post.id}  to={`/boardingInfo/${post.id}`} state={{post}}>
                   <BoardingCard className="" key={post.id} post={post} />
+                  </Link> 
                 ))}
+                
               </div>
+             
             ) : (
+            
               <p>No posts available</p>
             )}
           </div>

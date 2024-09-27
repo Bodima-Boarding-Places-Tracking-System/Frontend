@@ -1,11 +1,11 @@
 import React from "react";
 import { HiLocationMarker, HiStar } from "react-icons/hi";
 
-const BoardingCard = ({ post }) => {
+const SimilarLocation = ({ post }) => {
   return (
-    <div className=" w-full md:max-w-[750px] ">
-      <div className=" bg-white text-whitew-full h-48 shadow-xl rounded-lg flex p-2 gap-3 border-2">
-        <div className="w-[160px] h-full relative">
+    <div className=" w-full md:max-w-[550px] ">
+      <div className=" bg-white text-whitew-full h-90 shadow-xl rounded-lg flex flex-col p-2 gap-3 border-2">
+        <div className="w-[300px] h-full relative">
           <div className="w-30 h-8 bg-white text-black border absolute top-2 left-2 rounded p-1">
             <p className="text-sm text-[#003566] font-medium">Featured</p>
           </div>
@@ -14,8 +14,7 @@ const BoardingCard = ({ post }) => {
             src="https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg"
             alt="Property"
           />
-        </div>
-        <div className="bg-white flex-1 flex flex-col justify-between h-full p-4">
+       
           <h1 className="text-2xl font-medium line-clamp-1">{post && post.name}</h1>
           <div className="flex flex-col gap-1 pb-2">
             <div className="flex items-center gap-1 mt-2 ">
@@ -39,4 +38,4 @@ const BoardingCard = ({ post }) => {
   );
 };
 
-export default BoardingCard;
+export default SimilarLocation;
