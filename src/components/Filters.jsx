@@ -13,8 +13,8 @@ const Filters = () => {
         </span>
       </div>
       <div>
-        <form className="flex flex-col gap-3" onSubmit={handleFilters}>
-          <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+        <form className="flex flex-col gap-3 text-gray-500" onSubmit={handleFilters}>
+          <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
             <select
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
@@ -27,7 +27,7 @@ const Filters = () => {
               <option value="3">3 km</option>
             </select>
           </div>
-          <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+          <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
             <select
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
@@ -40,7 +40,7 @@ const Filters = () => {
               <option value="<7000">Rs 6000 - Rs 7000</option>
             </select>
           </div>
-          <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+          <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
             <select
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
@@ -53,7 +53,7 @@ const Filters = () => {
               <option value="3">3</option>
             </select>
           </div>
-          <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+          <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
             <select
               className="border-0 focus:ring-0 flex-1 py-3"
               type="text"
@@ -67,7 +67,7 @@ const Filters = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"
+            className="w-full bg-yellow-300 hover:bg-[#003566] text-black hover:text-white font-medium rounded-lg py-3"
           >
             Apply Filters
           </button>

@@ -9,7 +9,7 @@ import {
   LuPhone,
   LuUser,
 } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   checkPasswordStrength,
   validateEmail,
@@ -19,15 +19,20 @@ import {
   validateWebmail,
 } from "../Validators";
 import { Alert } from "flowbite-react";
+import {toast} from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formdata, setFormData] = useState({});
   const [formError, setFormError] = useState(null);
+  const [regError, setRegError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(null);
   const [passwordStrengthColor, setPasswordStrengthColor] = useState(null);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateName(formdata.firstName)) {
@@ -85,7 +90,49 @@ const SignUp = () => {
       setFormError(null);
     }
 
-    console.log(formdata);
+    setLoading(true);
+
+    try {
+      if (formdata.role === "student") {
+        const res = await fetch("https://localhost:7100/api/User/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: formdata.firstName,
+            lastName: formdata.lastName,
+            role: formdata.role,
+            webmail: formdata.webmail,
+            password: formdata.password,
+          }),
+        });
+        if (res.ok) {
+          setLoading(false);
+          const data = await res.json();
+          toast.success("Account registered!");
+          navigate("/login");
+          return;
+        }
+        if (!res.ok && res.status === 400) {
+          setLoading(false);
+          const data = await res.json();
+          setRegError(data.error);
+          toast.error(data.error);
+          return;
+        }
+
+        if (!res.ok) {
+          setLoading(false);
+          toast.error("Unexpected error occurred.");
+          return;
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error("Something went wrong!");
+      console.log(error);
+    }
   };
 
   const handlePasswordStrengthChecker = (e) => {
@@ -122,7 +169,7 @@ const SignUp = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuUser className="absolute left-2 opacity-50" size={22} />
               <input
                 className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -135,7 +182,7 @@ const SignUp = () => {
                 }}
               />
             </div>
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuUser className="absolute left-2 opacity-50" size={22} />
               <input
                 className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -148,7 +195,7 @@ const SignUp = () => {
                 }}
               />
             </div>
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuAward className="absolute left-2 opacity-50" size={22} />
               <select
                 className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 py-3"
@@ -170,7 +217,7 @@ const SignUp = () => {
             </div>
             {formdata.role === "student" && (
               <>
-                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
                   <LuMail className="absolute left-2 opacity-50" size={22} />
                   <input
                     className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -187,7 +234,7 @@ const SignUp = () => {
             )}
             {formdata.role === "boarding-owner" && (
               <>
-                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
                   <LuMail className="absolute left-2 opacity-50" size={22} />
                   <input
                     className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -200,7 +247,7 @@ const SignUp = () => {
                     }}
                   />
                 </div>
-                <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+                <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
                   <LuPhone className="absolute left-2 opacity-50" size={22} />
                   <input
                     className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -215,7 +262,7 @@ const SignUp = () => {
                 </div>
               </>
             )}
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuLock className="absolute left-2 opacity-50" size={22} />
               <input
                 className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 placeholder:text-gray-600 py-3"
@@ -249,7 +296,9 @@ const SignUp = () => {
             <div className="w-full space-y-2 mb-2">
               <div className="flex justify-between">
                 <span>Password strength</span>
-                <span className={`font-medium text-${passwordStrengthColor}`}>{passwordStrength}</span>
+                <span className={`font-medium text-${passwordStrengthColor}`}>
+                  {passwordStrength}
+                </span>
               </div>
               <div className="flex justify-between flex-1 gap-4">
                 <div
@@ -292,7 +341,8 @@ const SignUp = () => {
             )}
             <button
               type="submit"
-              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"
+              disabled={loading}
+              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3 disabled:opacity-50 disabled:hover:bg-yellow-300 disabled:hover:text-black"
             >
               Create Account
             </button>

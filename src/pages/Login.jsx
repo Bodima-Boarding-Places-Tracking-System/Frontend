@@ -1,30 +1,67 @@
 import { Alert } from "flowbite-react";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { LuEye, LuEyeOff, LuLock, LuMail } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { LuEye, LuEyeOff, LuLock, LuMail, LuAward } from "react-icons/lu";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../Validators";
+import { toast } from "react-toastify";
+import { setCredentials } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formdata, setFormData] = useState({});
   const [formError, setFormError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormError(null);
+
+    if (formdata.role === undefined || formdata.role === "unselected") {
+      setFormError("Please select your role");
+      return;
+    }
 
     if (!validateEmail(formdata.email)) {
       setFormError("Please enter a valid email");
       return;
-    } else {
-      setFormError(null);
     }
 
     if (formdata.password.length < 8) {
       setFormError("Password must be at least 8 characters long");
       return;
-    } else {
-      setFormError(null);
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch("https://localhost:7100/api/User/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(formdata),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setLoading(false);
+        setFormError(data.error);
+        return;
+      }
+      if (res.ok) {
+        console.log(data);
+        toast.success("Loggin successful!");
+        dispatch(setCredentials({ user: data.user, token: data.token }));
+        setLoading(false);
+        navigate("/");
+      }
+    } catch (error) {
+      setLoading(false);
+      setFormError(error.response);
+      console.log(error);
     }
   };
 
@@ -40,19 +77,39 @@ const Login = () => {
             className="flex flex-col items-end gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
+              <LuAward className="absolute left-2 opacity-50" size={22} />
+              <select
+                className="ps-10 border-0 focus:ring-0 flex-1 text-gray-600 py-3"
+                type="text"
+                id="role"
+                required
+                placeholder="Log in as"
+                onChange={(e) => {
+                  setFormData({ ...formdata, role: e.target.value });
+                }}
+                defaultValue="unselected"
+              >
+                <option value={"unselected"} disabled>
+                  Log in as a
+                </option>
+                <option value="student">Student</option>
+                <option value="boarding-owner">Boarding Owner</option>
+              </select>
+            </div>
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuMail className="absolute left-2 opacity-50" size={22} />
               <input
                 className="ps-10 border-0 focus:ring-0 flex-1 py-3"
                 type="email"
                 required
-                placeholder="Email"
+                placeholder={formdata.role === "student" ? "Webmail" : "Email"}
                 onChange={(e) => {
                   setFormData({ ...formdata, email: e.target.value });
                 }}
               />
             </div>
-            <div className="w-full relative flex items-center border-2 rounded border-gray-200">
+            <div className="w-full relative flex items-center border rounded-lg overflow-hidden border-gray-200">
               <LuLock className="absolute left-2 opacity-50" size={22} />
               <input
                 className="ps-10 border-0 focus:ring-0 flex-1 py-3"
@@ -95,9 +152,10 @@ const Login = () => {
             )}
             <button
               type="submit"
-              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3"
+              disabled={loading}
+              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3 disabled:opacity-50 disabled:hover:bg-yellow-300 disabled:hover:text-black"
             >
-              Log In
+              Login
             </button>
           </form>
           <div className="flex items-center gap-2 mt-5">

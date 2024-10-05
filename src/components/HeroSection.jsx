@@ -1,6 +1,6 @@
 const HeroSection = () => {
   return (
-    <div className="w-full md:max-w-4xl md:mx-auto p-2 mt-10">
+    <div className="w-full md:max-w-4xl md:mx-auto p-2 mt-2 md:mt-10">
       <div className="w-full h-[160px] md:h-[200px] relative">
         <img
           src="https://media.istockphoto.com/id/1349297974/photo/multi-ethnic-group-of-latin-american-college-students-smiling.jpg?s=612x612&w=0&k=20&c=-QDZNIqJva0oCy_sGuTkT0kjflqEShh0GmaIMLvp5dw="

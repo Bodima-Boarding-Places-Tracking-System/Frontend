@@ -5,13 +5,18 @@ import Contact from "./pages/Contact";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ScrollToTop from "./components/ScrollToTop";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
+      <ToastContainer autoClose={2000} />
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
