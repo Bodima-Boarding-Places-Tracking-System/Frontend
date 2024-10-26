@@ -153,7 +153,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded py-3 disabled:opacity-50 disabled:hover:bg-yellow-300 disabled:hover:text-black"
+              className="w-full bg-yellow-300 hover:bg-[#003566] hover:text-white font-medium rounded-lg py-3 disabled:opacity-50 disabled:hover:bg-yellow-300 disabled:hover:text-black"
             >
               Login
             </button>

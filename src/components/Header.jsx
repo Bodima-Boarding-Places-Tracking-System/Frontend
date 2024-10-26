@@ -79,6 +79,11 @@ const Header = () => {
               <Link to={"/"}>
                 <Dropdown.Item>My Profile</Dropdown.Item>
               </Link>
+              {currentUser && currentUser.isAdmin && (
+                <Link to={"/"}>
+                  <Dropdown.Item>Go to Dashboard</Dropdown.Item>
+                </Link>
+              )}
               <Dropdown.Divider />
               <Dropdown.Item onClick={handleLogOut}>Sign out</Dropdown.Item>
             </Dropdown>
@@ -97,6 +102,14 @@ const Header = () => {
             >
               Post Your Ad
             </Button>
+          )}
+
+          {currentUser && currentUser.isAdmin && (
+            <Link to={"/dashboard"}>
+              <Button className="rounded-lg bg-yellow-300 focus:ring-0 enabled:hover:bg-[#FFD60A] text-black">
+                Go to Dashboard
+              </Button>
+            </Link>
           )}
         </div>
         <NavbarCollapse className="md:hidden">

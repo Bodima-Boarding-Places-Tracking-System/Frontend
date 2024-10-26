@@ -8,6 +8,8 @@ import SignUp from "./pages/SignUp";
 import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminPrivateRoutes from "./components/AdminPrivateRoutes";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -21,6 +23,9 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route element={<AdminPrivateRoutes />}>
+          <Route path="/dashboard" element={<Dashboard/>} />
+        </Route>
         <Route path="*" element={<Navigate to={"/"} />} />
       </Routes>
     </BrowserRouter>
