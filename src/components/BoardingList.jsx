@@ -31,7 +31,11 @@ const BoardingList = () => {
 
         <div className="lg:hidden">
           {isTablet && (
-            <Button size="icon" variant="outline" onClick={() => setIsFilterView(!isFilterView)}>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={() => setIsFilterView(!isFilterView)}
+            >
               <ListFilter />
             </Button>
           )}
@@ -39,7 +43,7 @@ const BoardingList = () => {
       </div>
       <div className="flex flex-col lg:flex-row gap-6">
         {isTablet && isFilterView && (
-          <div className="md:w-80 h-fit bg-gray-200 rounded-lg border border-secondary-100">
+          <div className="md:w-full h-fit bg-secondary-50 rounded-lg border border-secondary-100">
             <FiltersMenu />
           </div>
         )}
@@ -51,10 +55,7 @@ const BoardingList = () => {
         <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 h-fit gap-4 flex-1">
           {boardingList.length > 0 &&
             boardingList.map((boarding, index) => (
-              <div key={index}>
-                <BoardingCard key={index} boarding={boarding} />
-                {/* {index != boardingList.length - 1 && <hr />} */}
-              </div>
+              <BoardingCard key={index} boarding={boarding} />
             ))}
         </div>
       </div>

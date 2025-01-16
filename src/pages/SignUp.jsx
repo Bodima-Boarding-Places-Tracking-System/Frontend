@@ -17,7 +17,7 @@ import {
   validatePassword,
   validateWebmail,
 } from "@/lib/validations";
-import { ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 // import toast from "react-hot-toast";
 import { Link, useLocation } from "react-router-dom";

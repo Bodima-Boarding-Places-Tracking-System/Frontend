@@ -177,8 +177,14 @@ import {
 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 const BoardingCard = ({ boarding }) => {
+  const navigate = useNavigate();
+
+  const viewAd = () => {
+    navigate(`/ad/${boarding.id}`)
+  }
   return (
     <div
       className={`p-4 h-fit w-full border rounded-lg ${
@@ -192,7 +198,8 @@ const BoardingCard = ({ boarding }) => {
               src={boarding.imageUrl}
               alt={boarding.name}
               title={boarding.name}
-              className="w-full h-36 md:h-36 min-w-20 self-start object-cover ring-1 ring-offset-2 ring-secondary-100 rounded "
+              onClick={viewAd}
+              className="w-full h-44 md:h-36 min-w-20 self-start object-cover ring-1 ring-offset-2 ring-secondary-100 rounded cursor-pointer"
             />
             <Badge
               variant={"secondary"}
@@ -211,7 +218,7 @@ const BoardingCard = ({ boarding }) => {
               >
                 Featured
               </Badge> */}
-              <h1 className="text-[1.075rem] md:text-[1.125rem] font-bold text-secondary-700">
+              <h1 className="text-[1.15rem] md:text-[1.125rem] font-bold text-secondary-700">
                 {boarding.name}
               </h1>
               <p className="text-sm">{boarding.address}</p>
@@ -264,6 +271,7 @@ const BoardingCard = ({ boarding }) => {
             size=""
             variant="outline"
             className="text-[1rem] hidden md:flex text-secondary-700"
+            onClick={() => {viewAd()}}
           >
             More info
           </Button>

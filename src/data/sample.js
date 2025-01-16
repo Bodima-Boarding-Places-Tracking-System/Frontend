@@ -4,7 +4,8 @@ export const boardingPlaces = [
     name: "Boarding Palace",
     address: "No 17, Bandaranayake Mw, Katubedda, Moratuwa",
     contactNumber: "076 094 4045",
-    description: "A cozy and comfortable place for boys",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     rating: { value: 4.5, count: 10 },
     distanceToUniversity: 2,
     monthlyFee: 5000,
